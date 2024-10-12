@@ -1,14 +1,8 @@
 #pragma once
 
-#include <filesystem>
-#include <fstream>
-#include <algorithm>
-#include <array>
-#include <ranges>
-#include <cassert>
-#include <iostream>
+#include <istream>
+#include <limits>
 #include <vector>
-
 
 namespace Huffman {
 	using Sign = uint8_t;
@@ -71,8 +65,6 @@ namespace Huffman {
 
 
 
-	//std::vector<Sign>
-	//std::tuple<std::vector<CompressorNode>, std::vector<CompressorNode>, CompressorNode*>
 	std::tuple<std::vector<DecompressorNode>, std::vector<DecompressorNode>, DecompressorNode*>
 		makeDecompressorTree(std::vector<SignFrequency>& frequency_vec);
 }

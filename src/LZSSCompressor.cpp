@@ -1,5 +1,8 @@
 #include "LZSSCompressor.h"
 #include <boost/circular_buffer.hpp>
+#include <algorithm>
+#include <bit>
+#include "BitWriter.h"
 
 namespace LZSS {
 	LZSSCompressor::LZSSCompressor(size_t dict_size, size_t buffer_size) : dict_size(dict_size), buffer_size(buffer_size)
@@ -29,7 +32,6 @@ namespace LZSS {
 	{
 		if (dict_size == 0 or buffer_size == 0)
             std::exit(1);
-//			throw std::runtime_error("LZSS error: null buffer or dictionary size");
 
 		boost::circular_buffer<unsigned char> window(dict_size + buffer_size, dict_size, 0);
 
@@ -37,7 +39,6 @@ namespace LZSS {
 			max_pos_width = std::bit_width(dict_size),
 			max_len_width = std::bit_width(buffer_size);
 		const auto refweight = 1 + max_pos_width + max_len_width;
-		std::cout << "computed ref weight = " << refweight << '\n';
 
 
 		const auto dict = [this, &window] {
@@ -78,10 +79,6 @@ namespace LZSS {
 				window.push_back(sign.value());
 			else
 				break;
-
-		//std::vector<Element> output;
-		//std::ofstream debug("LZSS_COMPRESSOR_DBG.txt", std::ios::trunc);
-		//debug << "pos width = " << max_pos_width << '\n' << "len width = " << max_len_width << std::endl;
 
 		{
 			BitWriter bitwriter(ostream);
@@ -145,7 +142,6 @@ namespace LZSS {
 					bitwriter.write(1, 1);
 					bitwriter.write(pos, max_pos_width);
 					bitwriter.write(best_ref.second, max_len_width);
-					//debug << "pos = " << pos << " len = " << best_ref.second << std::endl;
 
 					for (int i = 0; i < best_ref.second; ++i)
 						if (const auto sign = nextChar(); sign.has_value())
@@ -156,63 +152,5 @@ namespace LZSS {
 			}
 		}
 
-
-		//auto weight = 0ULL, refs = 0ULL;
-		//for (const auto& element : output) {
-		//	if (element.isRef) {
-		//		refs++;
-		//		weight += 1 + max_pos_width + max_len_width;
-		//	}
-		//	else {
-		//		weight += 1 + 8;
-		//	}
-		//}
-		//std::cout << "max ref len: " << std::ranges::max_element(output, {}, [](const Element& e) {
-		//	if (e.isRef)
-		//		return e.ref.len;
-		//	return decltype(e.ref.len){};
-		//	})->ref.len << '\n';
-
-		//std::cout << "refs: " << refs << '\n';
-		//std::cout << weight << " bits\n";
-		//std::cout << ((8 - weight % 8) + weight) / 8 << " bytes\n";
-
-
-		//std::vector<bool> result;
-
-		//std::for_each(output.begin(), output.end(), [&result, max_len_width, max_pos_width](const Element& e) {
-		//	if (e.isRef) {
-		//		result.push_back(1);
-		//		{
-		//			std::bitset<sizeof(e.ref.len) * 8> len;
-		//			for (int i = max_len_width - 1; i >= 0; --i)
-		//				result.push_back(len[i]);
-		//		}
-		//		{
-		//			std::bitset<sizeof(e.ref.pos) * 8> pos;
-		//			for (int i = max_pos_width - 1; i >= 0; --i)
-		//				result.push_back(pos[i]);
-		//		}
-		//	}
-		//	else {
-		//		result.push_back(0);
-		//		std::bitset<8> literal{ (unsigned char)e.literal.sign };
-		//		for (int i = literal.size() - 1; i >= 0; --i)
-		//			result.push_back(literal[i]);
-		//	}
-		//	}
-		//);
-
-		//std::cout << "bitarray size: " << result.size() << '\n';
-
-
-		//auto& inner_vec = result._Myvec;
-		//const auto data = reinterpret_cast<char*>(inner_vec.data());
-		//const auto byte_size = inner_vec.size() * sizeof(decltype(result._Myvec)::value_type);
-
-		// write header
-
-		/*ofstream.write(reinterpret_cast<const char*>(&header), sizeof header);
-		ofstream.write(data, byte_size);*/
 	}
 }
