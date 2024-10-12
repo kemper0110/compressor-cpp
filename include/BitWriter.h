@@ -2,6 +2,7 @@
 // Created by danil on 20.10.2022.
 //
 #include <ostream>
+#include <cstdint>
 
 #ifndef SIMPLE_PROJECT_WLIB_BITWRITER_H
 #define SIMPLE_PROJECT_WLIB_BITWRITER_H

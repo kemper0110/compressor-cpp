@@ -7,6 +7,7 @@
 
 #include <optional>
 #include <istream>
+#include <cstdint>
 
 class BitReader {
     std::istream& istream;

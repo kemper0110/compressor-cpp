@@ -3,6 +3,7 @@
 #include <istream>
 #include <limits>
 #include <vector>
+#include <cstdint>
 
 namespace Huffman {
 	using Sign = uint8_t;
@@ -25,9 +26,6 @@ namespace Huffman {
 		uint32_t freq{};
 	};
 
-
-	namespace ranges = std::ranges;
-	namespace fs = std::filesystem;
 
 
 	enum class TreeType {
