@@ -1,4 +1,4 @@
-# Библиотека архивации на алгоритмах LZSS + Huffman
+# Библиотека сжатия на алгоритмах LZSS + Huffman
 
 Написан на C++. Использует boost/circular_buffer для LZSS. 
 
