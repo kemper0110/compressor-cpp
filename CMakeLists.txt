@@ -20,3 +20,13 @@ target_include_directories(compressor PRIVATE
         ${BOOST_ROOT}/move/include
         ${BOOST_ROOT}/circular_buffer/include
 )
+
+
+add_subdirectory(gtest)
+enable_testing()
+
+add_executable(compressor_tests test/compressor_tests.cpp)
+
+target_link_libraries(compressor_tests PRIVATE gtest gtest_main compressor)
+
+add_test(NAME CompressorTests COMMAND compressor_tests)

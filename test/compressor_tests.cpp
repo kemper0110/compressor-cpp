@@ -1,26 +1,36 @@
-//#include "../include/library.h"
-//#include "../include/LZSSCompressor.h"
-//#include "../include/LZSSDecompressor.h"
-//#include "../include/HuffmanCompressor.h"
-//#include "../include/HuffmanDecompressor.h"
 //
-//#include <iostream>
-//#include <ranges>
-//#include <thread>
-//#include <sstream>
-//#include <fstream>
+// Created by Danil on 12.10.2024.
 //
-//
-//std::string HSCompress(const std::string& input, int dict_size, int buffer_size){
-//    std::stringstream iss(input), pss, oss;
-//
-//    Huffman::HuffmanCompressor().compress(iss, pss);
-//    LZSS::LZSSCompressor(dict_size, buffer_size).compress(pss, oss);
-//
-//    std::string compress_result = oss.str();
-//    return compress_result;
-//}
-//
+#include <gtest/gtest.h>
+#include <iostream>
+#include <ranges>
+#include <sstream>
+#include <fstream>
+#include "HuffmanCompressor.h"
+#include "LZSSCompressor.h"
+
+TEST(BasicCompressText, Mumu) {
+    std::ifstream ifs("../test/mumu.txt");
+    if (!ifs.is_open())
+        throw std::runtime_error("File not found");
+    ifs.seekg(0, std::ios::end);
+    const auto size = ifs.tellg();
+    ifs.seekg(0, std::ios::beg);
+    std::cout << "initial size is: " << size << '\n';
+
+    std::stringstream pss, oss;
+    Huffman::HuffmanCompressor().compress(ifs, pss);
+    LZSS::LZSSCompressor(256, 2048).compress(pss, oss);
+
+    std::string compress_result = oss.str();
+    std::cout << "compressed size: " << compress_result.size() << '\n';
+
+    const auto reduce = (double) compress_result.size() / size - 1.0;
+    std::cout << reduce * 100 << "% file size lost" << '\n';
+    // expected loss: ~35%
+}
+
+
 //std::string HSDecompress(const std::string& input){
 //    std::stringstream iss(input), pss, oss;
 //

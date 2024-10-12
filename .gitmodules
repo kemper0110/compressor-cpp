@@ -28,3 +28,6 @@
 [submodule "boost/preprocessor"]
 	path = boost/preprocessor
 	url = https://github.com/boostorg/preprocessor.git
+[submodule "gtest"]
+	path = gtest
+	url = https://github.com/google/googletest.git
