@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.28)
 project(compressor)
 
 set(CMAKE_CXX_STANDARD 23)
-set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/boost)
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/boost)
 
 include_directories(include)
 add_library(compressor STATIC src/BitReader.cpp src/BitWriter.cpp src/HuffmanCompressor.cpp src/HuffmanDecompressor.cpp src/HuffmanTree.cpp
