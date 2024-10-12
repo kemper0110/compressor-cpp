@@ -1,26 +1,9 @@
 #pragma once
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-#include <set>
-#include <algorithm>
-#include <bit>
-#include <bitset>
-//#include <ranges>
+#include <istream>
+#include <ostream>
 #include "LZSSHeader.h"
 
-
-#include "BitWriter.h"
-
-
 namespace LZSS {
-
-	namespace fs = std::filesystem;
-	//namespace ranges = std::ranges;
-	//namespace views = std::views;
-
-
-
 	class LZSSCompressor
 	{
 		struct Ref {

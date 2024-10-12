@@ -1,5 +1,8 @@
 #include "HuffmanCompressor.h"
-
+#include <iostream>
+#include <algorithm>
+#include "BitWriter.h"
+#include <array>
 
 namespace Huffman {
 	HuffmanCompressor::HuffmanCompressor() = default;
@@ -9,11 +12,6 @@ namespace Huffman {
 		auto [frequency_vec, codemap] = makeCompressorTree(istream);
 
 		istream.seekg(0, istream.beg);
-		//std::tie(frequency_vec, codemap) = makeCompressorTree(istream);
-
-		//for (int i = 0; i < codemap.size(); ++i) 
-		//	std::cout << (char)i << " : " << codemap[i].size() << '\n';
-		//std::cout << '\n';
 
 		Header header = {
 			.dict_size = (decltype(Header::dict_size))frequency_vec.size(),
@@ -36,24 +34,6 @@ namespace Huffman {
 					bitwriter.write(bit, 1);
 				});
 		}
-
-
-		//std::vector<SignWidth> output_dict;
-		//output_dict.reserve(frequency_vec.size());
-		//for (const auto& sf : frequency_vec) {
-		//	const auto code_width = codemap[sf.sign].size();
-		//	output_dict.emplace_back(sf.sign, code_width);
-		//}
-		//ostream.write(reinterpret_cast<const char*>(output_dict.data()), output_dict.size() * sizeof SignWidth);
-
-
 	}
-	//std::vector<SignFrequency> frequency_vec;
-	//frequency_vec.reserve(codemap.size());
-	//for (auto i = 0UL; i < codemap.size(); ++i)
-	//	if (codemap[i].size())
-	//		frequency_vec.emplace_back(i, codemap[i]);
-
-
 }
 
