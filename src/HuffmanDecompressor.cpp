@@ -1,8 +1,9 @@
 #include "HuffmanDecompressor.h"
 
 #include "BitReader.h"
-#include <array>
 #include <bitset>
+#include <tuple>
+#include <vector>
 
 namespace Huffman {
     HuffmanDecompressor::HuffmanDecompressor() = default;

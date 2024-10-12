@@ -4,6 +4,7 @@
 #include <limits>
 #include <vector>
 #include <cstdint>
+#include <array>
 
 namespace Huffman {
 	using Sign = uint8_t;

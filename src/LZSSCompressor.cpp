@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <bit>
 #include "BitWriter.h"
+#include <optional>
 
 namespace LZSS {
 	LZSSCompressor::LZSSCompressor(size_t dict_size, size_t buffer_size) : dict_size(dict_size), buffer_size(buffer_size)
